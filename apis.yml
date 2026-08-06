@@ -1,8 +1,18 @@
 aid: vida-health
 name: Vida Health
-description: 'Vida Health is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Vida Health is a San Francisco-based virtual care company founded in
+  2014 that combines an AI-powered mobile app with a national network of licensed clinicians,
+  coaches and therapists to prevent, manage and reverse chronic cardiometabolic and
+  behavioral health conditions including obesity, diabetes, hypertension, depression
+  and anxiety. Vida sells a turnkey enterprise programme to employers and health plans,
+  layering GLP-1 prescribing and clinical oversight on top of behavioral coaching,
+  and its platform ingests real-time readings from more than 100 connected devices
+  and consumer health apps to feed outcome reporting back to its enterprise buyers.
+  Vida publishes no public developer portal or API documentation: the API host api.vida.com
+  is live but returns 401 on every path, and data/EHR integration for health plans
+  and employers is arranged through enterprise sales rather than self-service onboarding.'
 url: https://raw.githubusercontent.com/api-evangelist/vida-health/refs/heads/main/apis.yml
+image: https://static.vida.com/wp-content/uploads/2025/03/20211650/Enterprise-3.png
 x-type: company
 x-source: harvest:secondary-market
 x-tier: stub
@@ -12,6 +22,15 @@ created: '2026-08-05'
 modified: '2026-08-05'
 tags:
 - Company
+- Health
+- Healthcare
+- Digital Health
+- Virtual Care
+- Chronic Care
+- Behavioral Health
+- Telehealth
+- Employee Benefits
+- Health Plans
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -19,5 +38,60 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/vida-health-domain-security.yml
+- type: LLMsTxt
+  url: llms/vida-health-llms.txt
 - type: Website
+  url: https://www.vida.com/
+- type: Blog
+  url: https://www.vida.com/resource-library/
+- type: BlogRSS
+  url: https://www.vida.com/feed/
+- type: Support
+  url: https://support.vida.com/hc/en-us
+- type: GitHubOrganization
+  url: https://github.com/vidahealth
+- type: SignUp
+  url: https://www.vida.com/clients/onboarding/step/account-creation
+- type: Login
+  url: https://vida.com/accounts/login/
+- type: TermsOfService
+  url: https://www.vida.com/terms-of-use/
+- type: PrivacyPolicy
+  url: https://www.vida.com/privacy-policy/
+- type: ContactUs
+  url: https://www.vida.com/contact-us/
+- type: NewsRoom
+  url: https://www.vida.com/news-center/
+- type: SecondaryMarket
   url: https://forgeglobal.com/vida-health_stock/
+x-enrichment:
+  date: '2026-08-05'
+  status: minimal
+  artifacts_added: 2
+  pass: local-v1
+x-coverage:
+  state: gated
+  reason: sales-gate
+  detail: >-
+    Vida's production API host api.vida.com is live but answers HTTP 401
+    (Invalid or expired access token) on every path including the entire
+    /.well-known/ tree, and there is no developer portal — the Partners page
+    advertises streamlined integrations with existing healthcare ecosystems but
+    publishes no reference or spec, routing every technical question to a
+    contact-sales form.
+  evidence:
+  - url: https://api.vida.com/openapi.json
+    status: 401
+  - url: https://api.vida.com/.well-known/openid-configuration
+    status: 401
+  - url: https://api.vida.com/graphql
+    status: 401
+  - url: https://www.vida.com/developers
+    status: 404
+  - url: https://www.vida.com/llms.txt
+    status: 404
+  - url: https://www.vida.com/partners/
+    status: 200
+  checked: '2026-08-05'

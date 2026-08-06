@@ -1,0 +1,65 @@
+# Vida Health
+
+> Vida Health is a San Francisco-based virtual care company (founded 2014) that pairs an
+> AI-powered mobile app with a national network of licensed clinicians, coaches and therapists
+> to prevent, manage and reverse chronic cardiometabolic and behavioral health conditions —
+> obesity, diabetes, hypertension, depression and anxiety. Vida sells a turnkey enterprise
+> program to employers and health plans and ingests real-time readings from 100+ connected
+> devices and consumer health apps.
+
+## API surface
+
+Vida Health publishes **no public API documentation, developer portal, OpenAPI specification,
+GraphQL endpoint, MCP server or A2A agent card**. The production API host `https://api.vida.com`
+is live and answers HTTPS, but every probed path — including `/openapi.json`, `/swagger.json`,
+`/docs`, `/graphql`, `/llms.txt` and the whole `/.well-known/` tree — returns
+`HTTP 401 {"error": "Invalid or expired access token"}`. It is the authenticated backend for the
+Vida mobile and web apps, not a self-service developer product.
+
+Data and EHR integration for health plans and employers is arranged through enterprise sales
+(see Contact), not through a public developer program.
+
+## Company
+
+- [Website](https://www.vida.com/)
+- [Enterprise overview](https://www.vida.com/enterprise/)
+- [Health plans](https://www.vida.com/health-plans/)
+- [Partners](https://www.vida.com/partners/)
+- [Vida's approach](https://www.vida.com/our-approach/)
+- [Vida app](https://www.vida.com/vida-app/)
+- [Outcomes](https://www.vida.com/our-outcomes/)
+
+## Accounts
+
+- [Sign up](https://www.vida.com/clients/onboarding/step/account-creation)
+- [Log in](https://vida.com/accounts/login/)
+- [Support / help center](https://support.vida.com/hc/en-us)
+- [Contact](https://www.vida.com/contact-us/)
+
+## Content
+
+- [Resource library](https://www.vida.com/resource-library/)
+- [RSS feed](https://www.vida.com/feed/)
+- [News center](https://www.vida.com/news-center/)
+
+## Code
+
+- [GitHub organization](https://github.com/vidahealth) — 33 public repositories, all forks of
+  third-party libraries and internal tooling; no first-party SDK or API client is published.
+  No first-party package was found on npm, PyPI, RubyGems or Packagist.
+
+## Legal and trust
+
+- [Terms of use](https://www.vida.com/terms-of-use/)
+- [Privacy policy](https://www.vida.com/privacy-policy/)
+- [Accessibility](https://www.vida.com/accessibility/)
+- [Non-discrimination notice](https://www.vida.com/non-discrimination-notice/)
+- HITRUST r2 certification seal is displayed on the Vida homepage; Vida publishes no dedicated
+  trust center, compliance page, security.txt or vulnerability-disclosure policy.
+
+## API Evangelist profile
+
+- [apis.yml](https://raw.githubusercontent.com/api-evangelist/vida-health/refs/heads/main/apis.yml)
+- [Domain security probe](https://raw.githubusercontent.com/api-evangelist/vida-health/refs/heads/main/security/vida-health-domain-security.yml)
+
+<!-- generated: 2026-08-05 | method: generated | source: apis.yml + live probes of vida.com and api.vida.com -->
