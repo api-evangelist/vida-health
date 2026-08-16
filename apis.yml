@@ -19,7 +19,7 @@ x-tier: stub
 x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-05'
-modified: '2026-08-05'
+modified: '2026-08-15'
 tags:
 - Company
 - Health
@@ -42,6 +42,12 @@ common:
   url: security/vida-health-domain-security.yml
 - type: LLMsTxt
   url: llms/vida-health-llms.txt
+- type: Conventions
+  url: conventions/vida-health-conventions.yml
+- type: Conformance
+  url: conformance/vida-health-conformance.yml
+- type: Compliance
+  url: conformance/vida-health-conformance.yml
 - type: Website
   url: https://www.vida.com/
 - type: Blog
@@ -67,31 +73,38 @@ common:
 - type: SecondaryMarket
   url: https://forgeglobal.com/vida-health_stock/
 x-enrichment:
-  date: '2026-08-05'
+  date: '2026-08-15'
   status: minimal
-  artifacts_added: 2
+  artifacts_added: 6
   pass: local-v1
 x-coverage:
   state: gated
   reason: sales-gate
   detail: >-
-    Vida's production API host api.vida.com is live but answers HTTP 401
-    (Invalid or expired access token) on every path including the entire
-    /.well-known/ tree, and there is no developer portal — the Partners page
-    advertises streamlined integrations with existing healthcare ecosystems but
-    publishes no reference or spec, routing every technical question to a
-    contact-sales form.
+    Vida's production API host api.vida.com is live but returns a uniform HTTP 401
+    ({"error": "Invalid or expired access token"}) on every path — including
+    /openapi.json, /graphql, /mcp and the whole /.well-known/ tree, so even the
+    anonymous OAuth discovery documents RFC 8414 and RFC 9728 require are behind
+    the token wall — and there is no developer host at all (developer.vida.com,
+    developers.vida.com and docs.vida.com have no DNS record); the Partners page
+    advertises "streamlined integrations with existing healthcare ecosystems" and
+    "smooth and secure data sharing" but publishes no reference, spec or standard,
+    routing every technical question to a get-a-demo form.
   evidence:
   - url: https://api.vida.com/openapi.json
     status: 401
-  - url: https://api.vida.com/.well-known/openid-configuration
+  - url: https://api.vida.com/.well-known/oauth-protected-resource
     status: 401
   - url: https://api.vida.com/graphql
     status: 401
-  - url: https://www.vida.com/developers
+  - url: https://api.vida.com/mcp
+    status: 401
+  - url: https://www.vida.com/.well-known/agent-card.json
     status: 404
   - url: https://www.vida.com/llms.txt
     status: 404
+  - url: https://www.vida.com/pricing/
+    status: 404
   - url: https://www.vida.com/partners/
     status: 200
-  checked: '2026-08-05'
+  checked: '2026-08-15'
