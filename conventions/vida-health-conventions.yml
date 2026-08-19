@@ -1,0 +1,106 @@
+generated: '2026-08-15'
+method: probed
+source: >-
+  live HTTP probes of https://api.vida.com/ (GET and POST on /, /v1/, /v1/members,
+  /graphql, /openapi.json) — Vida Health publishes no API documentation, so every
+  field below is either OBSERVED on the wire or explicitly marked unknown
+name: Vida Health API conventions
+description: >-
+  Cross-cutting runtime semantics for api.vida.com. Vida operates no developer
+  program: there is no reference, no OpenAPI and no docs host, so this profile is
+  built ENTIRELY from what the live host emits on an unauthenticated request. Only
+  the error path is observable — every path returns HTTP 401 — so the successful
+  request/response conventions (pagination, expansion, idempotency, versioning
+  negotiation) are NOT knowable from outside and are recorded as unknown rather
+  than guessed.
+host: https://api.vida.com
+observability: error-path-only
+authentication:
+  style: bearer-token (inferred)
+  evidence: >-
+    Every path returns 401 with body {"error": "Invalid or expired access token"}.
+    The phrase "access token" is the only public signal of the scheme.
+  www_authenticate_header: absent
+  note: >-
+    No WWW-Authenticate challenge is returned, so an agent receiving the 401 is
+    given no machine-readable hint about which scheme or authorization server to
+    use. /.well-known/oauth-authorization-server and
+    /.well-known/oauth-protected-resource are themselves 401-gated, so RFC 9728
+    resource-metadata discovery is unavailable.
+  documented: false
+request_id:
+  supported: true
+  header: x-request-id
+  direction: response
+  format: UUIDv4
+  observed:
+  - 9de64ea0-1dba-49ec-a37e-7d9167959002
+  - 22068b30-c888-4c49-9a84-e073ab34f9ff
+  - 1b6c92b8-a769-48ba-a793-2fa3c79a881c
+  note: >-
+    Emitted on every response including unauthenticated 401s, and unique per
+    request. This is the one genuine agent-usable runtime convention Vida exposes
+    anonymously — a correlation id a caller can quote to support. It is not
+    documented anywhere on vida.com.
+error_envelope:
+  format: bare-json
+  rfc9457: false
+  content_type: application/json
+  shape: '{"error": "<message>"}'
+  fields:
+  - name: error
+    type: string
+    description: Human-readable message. No machine-readable code, type URI or
+      trace field accompanies it.
+  observed_statuses:
+  - status: 401
+    body: '{"error": "Invalid or expired access token"}'
+  note: >-
+    Not application/problem+json and carries no `type`, `title`, `status`,
+    `detail` or `instance` member, so it is not RFC 9457 Problem Details. Only
+    the 401 is observable anonymously; no other status could be elicited.
+rate_limiting:
+  headers_observed: []
+  standard_headers: false
+  note: >-
+    No RateLimit-*, X-RateLimit-*, or Retry-After header was returned on any
+    probed response. Limits may exist behind authentication; none are signalled
+    to an unauthenticated caller and none are documented. See
+    rate-limits/vida-health-rate-limits.yml.
+idempotency:
+  supported: unknown
+  header: null
+  note: >-
+    NOT DETERMINABLE. No Idempotency-Key handling can be observed on a host that
+    401s every request, and Vida publishes no documentation. Deliberately recorded
+    as unknown — no `Idempotency` pointer is emitted in apis.yml, because that
+    check asserts the provider supports and documents idempotent retries.
+pagination:
+  style: unknown
+  note: No successful response is obtainable anonymously and no docs exist.
+versioning:
+  style: uri-path (inferred)
+  evidence: >-
+    /v1/ and /v1/<resource> return the same 401 envelope as the root, consistent
+    with a versioned path prefix. This is weak evidence — the catch-all 401 is
+    returned for ANY path, including nonsense paths, so /v1/ answering 401 does
+    not by itself prove a v1 namespace exists.
+  documented: false
+  media_type_versioning: false
+transport_security:
+  http_version: HTTP/2 (h3 advertised via alt-svc)
+  hsts: max-age=31536000; includeSubDomains; preload
+  x_content_type_options: nosniff
+  x_frame_options: DENY
+  referrer_policy: strict-origin-when-cross-origin
+  content_security_policy: "default-src 'none'; frame-ancestors 'none'"
+  note: >-
+    A well-configured edge (Google Cloud front end, `via: 1.1 google`). The
+    security headers are the strongest positive signal on this host — they are
+    hardened defaults, not an API product decision.
+cross_links:
+  rate_limits: rate-limits/vida-health-rate-limits.yml
+  conformance: conformance/vida-health-conformance.yml
+  domain_security: security/vida-health-domain-security.yml
+  well_known: well-known/vida-health-well-known.yml
+checked: '2026-08-15'

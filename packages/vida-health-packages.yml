@@ -1,0 +1,101 @@
+generated: '2026-08-15'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org, rubygems.org, packagist.org, crates.io,
+  api.nuget.org, search.maven.org, proxy.golang.org, and
+  https://api.github.com/orgs/vidahealth/repos
+name: Vida Health packages and SDKs
+description: >-
+  Vida Health publishes NO first-party client library on any public package
+  registry, and no SDK anywhere on vida.com. Its GitHub organization
+  (github.com/vidahealth) holds 33 public repositories, 22 of them forks of
+  third-party libraries (django-tastypie, oauth2client, react-native-twilio-video-webrtc,
+  swagger-to-graphql, left-pad, SwiftyMarkdown …) and the remainder internal tooling
+  or blog-post examples (public-docker-local-dev, public-example-django, release,
+  ios_todo, django-model-viewer, ooo-calendar-sync). None wraps a Vida API.
+official_package_count: 0
+package_count: 0
+packages: []
+registries_checked:
+- registry: npm
+  endpoint: https://registry.npmjs.org/<pkg>
+  queries:
+  - name: vida-health
+    status: 404
+  - name: vidahealth
+    status: 404
+  - name: vida-api
+    status: 404
+  - name: '@vida/sdk'
+    status: 404
+  - name: vida
+    status: 200
+    first_party: false
+    note: >-
+      NOT Vida Health. npm `vida` is "A dynamic web server. Never hit refresh
+      again" by maintainer `ian`, latest 0.7.5. Unrelated.
+- registry: pypi
+  endpoint: https://pypi.org/pypi/<pkg>/json
+  queries:
+  - name: vida-health
+    status: 404
+  - name: vidahealth
+    status: 404
+  - name: vida
+    status: 200
+    first_party: false
+    note: >-
+      NOT Vida Health. PyPI `vida` 0.3 is "Python binding for Vida data
+      visualizations" by Phuoc Do (github.com/vidalab/pyvida). Unrelated.
+- registry: rubygems
+  status: no-first-party-package
+- registry: packagist
+  status: no-first-party-package
+- registry: crates.io
+  status: no-first-party-package
+- registry: nuget
+  status: no-first-party-package
+- registry: maven-central
+  status: no-first-party-package
+- registry: pkg.go.dev
+  status: no-first-party-package
+source_repositories:
+  org: https://github.com/vidahealth
+  public_repos: 33
+  first_party_sdks: 0
+  first_party_non_fork:
+  - name: .github
+    description: Vida Health Technology (org profile)
+    pushed: '2026-05-29'
+  - name: ooo-calendar-sync
+    language: JavaScript
+    pushed: '2026-05-21'
+  - name: product-management
+    pushed: '2026-04-15'
+  - name: release
+    description: A custom Github Action for release management
+    pushed: '2024-07-19'
+  - name: ios_todo
+    description: Example TODO App following our architecture
+    pushed: '2025-02-18'
+  - name: django-model-viewer
+    description: A tool for viewing Django model properties and relationships
+    pushed: '2023-07-27'
+  - name: public-docker-local-dev
+    description: Public companion to the docker-local-dev blog post
+    pushed: '2022-01-25'
+  - name: public-example-django
+    pushed: '2022-01-25'
+  - name: public-example-microservice
+    pushed: '2022-01-25'
+  note: >-
+    Vida's stack is inferable from these repos and their forks — Django/Python
+    backend, React/TypeScript web, Swift iOS, React Native, Twilio Video for
+    telehealth, Split feature flags, Snowplow analytics, Looker/BigQuery — but
+    none of it is a consumable client for a Vida API.
+note: >-
+  package_count is 0 because nothing first-party is published, not because this
+  artifact is unfinished. NO `Packages` or `SDKs` pointer is wired into apis.yml —
+  the sdk_count check credits providers who ship client libraries, and Vida ships
+  none.
+checked: '2026-08-15'

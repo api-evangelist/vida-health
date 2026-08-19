@@ -1,0 +1,54 @@
+generated: '2026-08-15'
+method: probed
+source: >-
+  live HTTP probes of https://api.vida.com/ (GET and POST on /, /v1/, /v1/members,
+  /graphql, /openapi.json) + a full search of www.vida.com for developer docs
+name: Vida Health rate limits
+description: >-
+  Vida Health documents no rate limits and signals none to an unauthenticated
+  caller. There is no developer portal or API reference to publish limits in, and
+  every observed response from api.vida.com carries no rate-limit header of any
+  kind. Limits almost certainly exist behind the token wall — this records that
+  NONE of them are discoverable from outside.
+limit_count: 0
+limits: []
+response_headers:
+  standard_ratelimit_headers: false
+  observed: []
+  probed_for:
+  - RateLimit-Limit
+  - RateLimit-Remaining
+  - RateLimit-Reset
+  - RateLimit-Policy
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  - Retry-After
+  note: >-
+    None of the above appeared on any probed response. The only non-standard
+    response header of interest is `x-request-id` (UUIDv4, per-request), captured
+    in conventions/vida-health-conventions.yml.
+exhaustion_status: unknown
+retry_guidance:
+  published: false
+  backoff_documented: false
+evidence:
+- url: https://api.vida.com/v1/members
+  status: 401
+  note: 'Headers returned: content-type, x-request-id, date, via, strict-transport-security,
+    x-content-type-options, x-frame-options, referrer-policy, content-security-policy,
+    alt-svc. No rate-limit header.'
+- url: https://api.vida.com/
+  status: 401
+  note: Same header set on POST. No rate-limit header.
+- url: https://www.vida.com/llms.txt
+  status: 404
+- url: https://developer.vida.com/
+  status: 0
+  note: Does not resolve (no DNS record).
+note: >-
+  limit_count is 0 because nothing is published or signalled, not because this
+  artifact is unfinished. NO `RateLimits` pointer is wired into apis.yml — that
+  check credits a provider for giving an agent a runtime limit signal, and Vida
+  gives none.
+checked: '2026-08-15'

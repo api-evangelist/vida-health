@@ -1,0 +1,113 @@
+generated: '2026-08-15'
+method: searched
+source: https://www.vida.com/ (footer certification seals) + https://www.vida.com/partners/
+name: Vida Health conformance and compliance posture
+description: >-
+  What Vida Health publicly asserts it conforms to. Vida publishes no developer
+  portal, no OpenAPI, no trust center and no compliance page, so there is no
+  machine-readable contract to assert API-level standards against. The only
+  conformance claims Vida makes in public are healthcare compliance seals
+  rendered as images in the site footer, plus the HIPAA/HITECH and state
+  telehealth obligations set out in its privacy and consent documents.
+scope: >-
+  Company-level regulatory and certification claims only. NO API-standard
+  conformance (OAuth 2.0, OIDC, FHIR, SMART on FHIR, FAPI, SCIM, RFC 9457,
+  RFC 8594, JSON:API, OData) can be asserted or refuted — api.vida.com returns
+  401 on every path and there is no published specification to read.
+certifications:
+- id: hitrust-r2
+  name: HITRUST CSF r2 Certification
+  conforms: true
+  evidence:
+    type: certification-seal
+    url: https://www.vida.com/
+    asset: https://static.vida.com/wp-content/uploads/2025/03/25171014/HITRUST-Assessment-Seals-r2-1024x322.webp
+    alt_text: r2 HiTrust Certified
+    note: >-
+      Rendered as an image seal in the site footer. Vida publishes no assessment
+      letter, certificate number, scope statement or validity window, so the
+      certified scope and expiry cannot be verified from public sources.
+- id: dime-seal-2026
+  name: DIME (Digital Medicine) Seal 2026
+  conforms: true
+  evidence:
+    type: certification-seal
+    url: https://www.vida.com/
+    asset: https://www.vida.com/wp-content/uploads/2026/07/dime-seal-1024x963.png
+    alt_text: DIME SEAL 2026
+    note: >-
+      Digital health quality seal displayed in the footer. No linked report or
+      evaluation summary is published on vida.com.
+regulatory:
+- id: hipaa
+  name: HIPAA / HITECH (US)
+  conforms: true
+  basis: covered-entity-and-business-associate
+  evidence:
+    url: https://www.vida.com/notice-of-privacy-practices/
+    note: >-
+      Vida publishes a HIPAA Notice of Privacy Practices; it operates a licensed
+      clinical network and handles PHI on behalf of employers and health plans.
+- id: state-consumer-health-data
+  name: US state consumer health data privacy laws (e.g. WA My Health My Data)
+  conforms: true
+  evidence:
+    url: https://www.vida.com/consumer-health-data-privacy-notice/
+- id: health-information-exchange
+  name: Health Information Exchange (HIE) participation
+  conforms: true
+  evidence:
+    url: https://www.vida.com/hie/
+    note: >-
+      Vida publishes an HIE consent notice stating "With your consent, Vida will
+      share and access your information through HIEs." The notice is a consent
+      document only — it names no exchange framework (Carequality, CommonWell,
+      eHealth Exchange, TEFCA) and no interoperability standard (FHIR, HL7 v2,
+      C-CDA, X12), so the technical basis of that exchange is not public.
+- id: telehealth-informed-consent
+  name: Telehealth informed consent
+  conforms: true
+  evidence:
+    url: https://www.vida.com/telehealth-informed-consent/
+- id: section-1557-nondiscrimination
+  name: ACA Section 1557 non-discrimination notice
+  conforms: true
+  evidence:
+    url: https://www.vida.com/non-discrimination-notice/
+- id: ada-wcag-accessibility
+  name: Accessibility statement
+  conforms: partial
+  evidence:
+    url: https://www.vida.com/accessibility/
+    note: Statement published; no WCAG conformance level or VPAT/ACR is named.
+not_asserted:
+- id: soc2
+  name: SOC 2
+  conforms: false
+  evidence: No SOC 2 claim, report request form or trust center found on vida.com.
+- id: iso-27001
+  name: ISO/IEC 27001
+  conforms: false
+  evidence: No ISO 27001 claim found on vida.com.
+- id: fhir
+  name: HL7 FHIR
+  conforms: false
+  evidence: >-
+    No FHIR capability statement, no /metadata endpoint, no FHIR base URL and no
+    mention of FHIR anywhere on vida.com or in the HIE consent notice.
+- id: oauth2-oidc
+  name: OAuth 2.0 / OpenID Connect discovery
+  conforms: unknown
+  evidence: >-
+    /.well-known/openid-configuration and /.well-known/oauth-authorization-server
+    return 401 on api.vida.com and 404 on www.vida.com. api.vida.com's 401 body
+    ("Invalid or expired access token") implies a bearer-token scheme, but the
+    scheme is not documented and discovery is gated, so conformance cannot be
+    established.
+- id: rfc9457
+  name: RFC 9457 Problem Details for HTTP APIs
+  conforms: false
+  evidence: >-
+    api.vida.com returns a bare {"error": "..."} JSON body with
+    content-type application/json, not application/problem+json.
+checked: '2026-08-15'

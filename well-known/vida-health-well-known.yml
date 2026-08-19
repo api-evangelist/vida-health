@@ -1,0 +1,88 @@
+generated: '2026-08-15'
+method: probed
+source: live HTTP probes of www.vida.com and api.vida.com
+name: Vida Health well-known probe
+description: >-
+  Probe of the RFC 8615 /.well-known/ tree on every host Vida Health is known to
+  operate. NOTHING WAS FOUND. www.vida.com (WordPress/nginx) answers 404 on every
+  path; api.vida.com — the live production API host — answers HTTP 401
+  {"error": "Invalid or expired access token"} on every path, including the whole
+  /.well-known/ tree, so even the anonymous discovery documents that RFC 8414 and
+  RFC 9728 require to be unauthenticated are behind the token wall.
+  NO WellKnown, SecurityTxt or APICatalog pointer is emitted in apis.yml: this file
+  records a measured ABSENCE, not a served surface.
+hosts:
+- host: www.vida.com
+  server: nginx (WordPress)
+  hits: 0
+  paths:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+- host: api.vida.com
+  server: live production API host (mobile/web app backend)
+  hits: 0
+  note: >-
+    Every path returns HTTP 401 with the JSON body {"error": "Invalid or expired
+    access token"} — a uniform authenticated catch-all, not a per-path 404. The
+    401 is evidence the host is live and gated, NOT evidence that a document
+    exists at that path.
+  paths:
+  - path: /.well-known/security.txt
+    status: 401
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 401
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 401
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 401
+    file: null
+  - path: /.well-known/api-catalog
+    status: 401
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 401
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 401
+    file: null
+  - path: /.well-known/agent.json
+    status: 401
+    file: null
+hosts_not_resolving:
+- developer.vida.com
+- developers.vida.com
+- docs.vida.com
+- trust.vida.com
+- status.vida.com
+summary:
+  paths_probed: 21
+  documents_found: 0
+  well_known_pointer_emitted: false
+  security_txt_pointer_emitted: false
+  agent_card_pointer_emitted: false
+checked: '2026-08-15'

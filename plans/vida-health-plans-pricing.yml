@@ -1,0 +1,56 @@
+generated: '2026-08-15'
+method: searched
+source: >-
+  https://www.vida.com/page-sitemap.xml (full page inventory), plus
+  https://www.vida.com/vidaselfpay/, https://www.vida.com/vida-direct-pay/,
+  https://www.vida.com/employers/, https://www.vida.com/health-plans/ and
+  https://www.vida.com/partners/
+name: Vida Health plans and pricing
+description: >-
+  Vida Health publishes NO prices. There is no /pricing page — the URL returns 404
+  and the page does not appear in the WordPress sitemap, which lists every public
+  page on www.vida.com. Vida sells a turnkey enterprise programme to employers,
+  health plans, PBMs and benefits consultants; every commercial route ends at a
+  "Get a demo" or "Contact us" form. Its two nominally self-serve products still
+  publish no numbers: Vida Self-Pay is described as a "defined contribution option"
+  where "employers set a monthly contribution amount", and Vida Direct Pay shows no
+  dollar amount, tier or billing period at all.
+model: enterprise-contract
+self_serve: false
+public_pricing: false
+plan_count: 0
+plans: []
+evidence:
+- url: https://www.vida.com/pricing/
+  status: 404
+  note: No pricing page exists; also absent from page-sitemap.xml.
+- url: https://www.vida.com/vidaselfpay/
+  status: 200
+  note: >-
+    "Defined contribution option" where "employers set a monthly contribution
+    amount". No dollar amounts, tiers or billing periods published.
+- url: https://www.vida.com/vida-direct-pay/
+  status: 200
+  note: No prices, plan names or billing periods published.
+- url: https://www.vida.com/partners/
+  status: 200
+  note: '"Flexible billing options" and "simplified contracting" — no rates.'
+- url: https://www.vida.com/get-a-demo/
+  status: 200
+  note: The terminal call to action for every buyer path.
+- url: https://www.vida.com/savings-calculator/
+  status: 200
+  note: >-
+    An ROI/savings calculator for employers. It models claims savings, not Vida's
+    own price, so it publishes no plan or rate.
+api_pricing:
+  published: false
+  note: >-
+    There is no API product to price. Vida operates no developer program, sells no
+    API access and publishes no developer plan; api.vida.com is the authenticated
+    backend for the Vida mobile and web apps.
+note: >-
+  plan_count is 0 because Vida publishes zero plans, not because this artifact is
+  unfinished. NO `Plans` or `Pricing` pointer is wired into apis.yml — an artifact
+  recording an absence must not be scored as a published pricing surface.
+checked: '2026-08-15'

@@ -10,24 +10,55 @@
 ## API surface
 
 Vida Health publishes **no public API documentation, developer portal, OpenAPI specification,
-GraphQL endpoint, MCP server or A2A agent card**. The production API host `https://api.vida.com`
-is live and answers HTTPS, but every probed path — including `/openapi.json`, `/swagger.json`,
-`/docs`, `/graphql`, `/llms.txt` and the whole `/.well-known/` tree — returns
-`HTTP 401 {"error": "Invalid or expired access token"}`. It is the authenticated backend for the
-Vida mobile and web apps, not a self-service developer product.
+GraphQL schema, MCP server or A2A agent card**. The production API host `https://api.vida.com`
+is live and answers HTTPS, but every probed path — `/openapi.json`, `/openapi.yaml`,
+`/swagger.json`, `/v1/openapi.json`, `/api-docs`, `/docs`, `/redoc`, `/graphql`, `/mcp` and the
+whole `/.well-known/` tree — returns `HTTP 401 {"error": "Invalid or expired access token"}`.
+It is the authenticated backend for the Vida mobile and web apps, not a self-service developer
+product. `developer.vida.com`, `developers.vida.com` and `docs.vida.com` do not resolve.
+
+What IS observable anonymously, from the 401 responses:
+
+- Every response carries an `x-request-id` (UUIDv4, unique per request) — the only
+  agent-usable runtime convention Vida exposes without a token.
+- The error envelope is a bare `{"error": "<message>"}` with `content-type: application/json`.
+  It is **not** RFC 9457 Problem Details.
+- **No** `RateLimit-*`, `X-RateLimit-*` or `Retry-After` header is returned, and **no**
+  `WWW-Authenticate` challenge — an unauthenticated agent is given no machine-readable hint
+  about which scheme or authorization server to use.
+- Hardened edge: HTTP/2 with h3 advertised, HSTS `max-age=31536000; includeSubDomains; preload`,
+  `nosniff`, `X-Frame-Options: DENY`, `Content-Security-Policy: default-src 'none'`.
 
 Data and EHR integration for health plans and employers is arranged through enterprise sales
-(see Contact), not through a public developer program.
+(see Contact), not through a public developer program. Vida publishes an HIE consent notice
+saying it will "share and access your information through HIEs" with member consent, but names
+no exchange framework (Carequality, CommonWell, eHealth Exchange, TEFCA) and no interoperability
+standard (FHIR, HL7 v2, C-CDA, X12).
 
 ## Company
 
 - [Website](https://www.vida.com/)
 - [Enterprise overview](https://www.vida.com/enterprise/)
+- [Employers](https://www.vida.com/employers/)
 - [Health plans](https://www.vida.com/health-plans/)
 - [Partners](https://www.vida.com/partners/)
 - [Vida's approach](https://www.vida.com/our-approach/)
 - [Vida app](https://www.vida.com/vida-app/)
+- [Connected devices](https://www.vida.com/healthcare-devices/)
 - [Outcomes](https://www.vida.com/our-outcomes/)
+
+## Pricing
+
+Vida publishes **no prices**. `https://www.vida.com/pricing/` returns 404 and no pricing page
+appears in the WordPress sitemap. Vida Self-Pay is described as a "defined contribution option"
+where "employers set a monthly contribution amount", with no amount published; Vida Direct Pay
+publishes no figure either. Every commercial path terminates at a demo or contact form.
+
+- [Get a demo](https://www.vida.com/get-a-demo/)
+- [Savings calculator](https://www.vida.com/savings-calculator/) — models employer claims
+  savings, not Vida's own price
+- [Vida Self-Pay](https://www.vida.com/vidaselfpay/)
+- [Vida Direct Pay](https://www.vida.com/vida-direct-pay/)
 
 ## Accounts
 
@@ -44,22 +75,43 @@ Data and EHR integration for health plans and employers is arranged through ente
 
 ## Code
 
-- [GitHub organization](https://github.com/vidahealth) — 33 public repositories, all forks of
-  third-party libraries and internal tooling; no first-party SDK or API client is published.
-  No first-party package was found on npm, PyPI, RubyGems or Packagist.
+- [GitHub organization](https://github.com/vidahealth) — 33 public repositories, 22 of them
+  forks of third-party libraries and the rest internal tooling or blog-post examples. No
+  first-party SDK or API client is published. No first-party package exists on npm, PyPI,
+  RubyGems, Packagist, crates.io, NuGet, Maven Central or pkg.go.dev. (The npm package `vida`
+  and the PyPI package `vida` belong to unrelated projects.)
 
 ## Legal and trust
 
 - [Terms of use](https://www.vida.com/terms-of-use/)
 - [Privacy policy](https://www.vida.com/privacy-policy/)
+- [Notice of privacy practices](https://www.vida.com/notice-of-privacy-practices/)
+- [Consumer health data privacy notice](https://www.vida.com/consumer-health-data-privacy-notice/)
+- [Health information exchange consent](https://www.vida.com/hie/)
+- [Telehealth informed consent](https://www.vida.com/telehealth-informed-consent/)
 - [Accessibility](https://www.vida.com/accessibility/)
 - [Non-discrimination notice](https://www.vida.com/non-discrimination-notice/)
-- HITRUST r2 certification seal is displayed on the Vida homepage; Vida publishes no dedicated
-  trust center, compliance page, security.txt or vulnerability-disclosure policy.
+- **HITRUST CSF r2 Certified** and **DIME SEAL 2026** are displayed as footer image seals on
+  vida.com. No certificate number, scope statement or validity window is published. Vida
+  publishes no trust center, no SOC 2 or ISO 27001 claim, no `security.txt`, no vulnerability
+  disclosure policy and no bug bounty program.
+
+## Not Vida Health — do not confuse
+
+- `https://vida.statuspage.io/` is **VIDA (vida.id)**, an Indonesian digital identity and eKYC
+  provider. It is not a Vida Health status page. Vida Health publishes **no** status page;
+  `status.vida.com` does not resolve.
+- `vida.io` is "Vida AI Agent OS" (AI phone agents for SMBs) — a different company with its own
+  public API reference.
+- The `iRAP-software/package-vida-api-sdk` GitHub project wraps the road-assessment ViDA API,
+  unrelated to Vida Health.
 
 ## API Evangelist profile
 
 - [apis.yml](https://raw.githubusercontent.com/api-evangelist/vida-health/refs/heads/main/apis.yml)
+- [Conventions (probed)](https://raw.githubusercontent.com/api-evangelist/vida-health/refs/heads/main/conventions/vida-health-conventions.yml)
+- [Conformance and compliance](https://raw.githubusercontent.com/api-evangelist/vida-health/refs/heads/main/conformance/vida-health-conformance.yml)
+- [Well-known probe](https://raw.githubusercontent.com/api-evangelist/vida-health/refs/heads/main/well-known/vida-health-well-known.yml)
 - [Domain security probe](https://raw.githubusercontent.com/api-evangelist/vida-health/refs/heads/main/security/vida-health-domain-security.yml)
 
-<!-- generated: 2026-08-05 | method: generated | source: apis.yml + live probes of vida.com and api.vida.com -->
+<!-- generated: 2026-08-15 | method: generated | source: apis.yml + live probes of vida.com, api.vida.com, GitHub org vidahealth, and eight package registries -->
