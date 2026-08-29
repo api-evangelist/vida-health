@@ -12,6 +12,17 @@ description: 'Vida Health is a San Francisco-based virtual care company founded 
   is live but returns 401 on every path, and data/EHR integration for health plans
   and employers is arranged through enterprise sales rather than self-service onboarding.'
 url: https://raw.githubusercontent.com/api-evangelist/vida-health/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://static.vida.com/wp-content/uploads/2025/03/20211650/Enterprise-3.png
 x-type: company
 x-source: harvest:secondary-market
